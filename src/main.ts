@@ -13,6 +13,9 @@ async function bootstrap() {
           clientId: CLIENTID,
           brokers: [BROKER1],
         },
+        consumer: {
+          groupId: 'myCont-consumer',
+        },
       },
     },
   );
