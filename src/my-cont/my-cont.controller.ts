@@ -1,18 +1,11 @@
-import { Controller, Inject, OnModuleInit } from '@nestjs/common';
-import { ClientKafka, MessagePattern } from '@nestjs/microservices';
-import { MY_CONT_SERVICE } from 'src/constants';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('my-cont')
-export class MyContController implements OnModuleInit {
-  constructor(@Inject(MY_CONT_SERVICE) private client: ClientKafka) {}
-  async onModuleInit() {
-    this.client.subscribeToResponseOf('__consumer_offsets');
-    await this.client.connect();
-  }
-
-  // @MessagePattern('say hello')
-  sayHello() {
-    console.log(this.client);
-    return 'hello';
+export class MyContController {
+  @MessagePattern('__hello_kafka_topic')
+  sayHello(data) {
+    console.log(data);
+    return data.value;
   }
 }
