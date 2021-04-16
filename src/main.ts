@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { BROKER1, CLIENTID } from './constants';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -13,13 +14,14 @@ async function bootstrap() {
           clientId: CLIENTID,
           brokers: [BROKER1],
         },
-        consumer: {
-          groupId: 'myCont-consumer',
-        },
+        // consumer: {
+        //   groupId: 'myCont-consumer',
+        // },
       },
     },
   );
 
-  app.listen(() => console.log('Microservice is listening'));
+  app.listen(() => Logger.log('Microservice is listening', 'Bootstrap'));
 }
+Logger.log('Bootstrap start....', 'Bootstrap');
 bootstrap();
